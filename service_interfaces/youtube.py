@@ -6,18 +6,8 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
-def get_youtube_searches(date, search_param: str):
+def get_youtube_searches(params: dict):
     search_url = "https://www.googleapis.com/youtube/v3/search"
-
-    params = {
-        "part": "snippet",
-        "q": search_param,
-        "key": settings.YOUTUBE_DATA_API_KEY,
-        "type": "video",
-        "order": "date",
-        "publishedAfter": date,
-        "maxResults": "50",
-    }
 
     session = requests.Session()
     try:

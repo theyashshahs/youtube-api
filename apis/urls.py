@@ -21,7 +21,7 @@ from youtube.views import YoutubeViewSet
 
 router = routers.SimpleRouter()
 
-router.register(r"youtube", YoutubeViewSet, basename="youtube")
+router.register(r"videos", YoutubeViewSet, basename="videos")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
