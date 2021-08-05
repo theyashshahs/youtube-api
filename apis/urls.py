@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
+from youtube.views import YoutubeViewSet
+
+router = routers.SimpleRouter()
+
+router.register(r"youtube", YoutubeViewSet, basename="youtube")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
+    path("admin/", admin.site.urls),
+] + router.urls
