@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:11.10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=apis
+      - POSTGRES_USER=apis
+      - POSTGRES_PASSWORD=apis
+
+  redis:
+    image: redis:5.0.6
+    volumes:
+      - redis_data:/data
+
+  web:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/src
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  celery_worker:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+    command: celery -A apis worker -ldebug
+    volumes:
+      - .:/src
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  celery_beat:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+    command: celery -A apis beat -ldebug
+    volumes:
+      - .:/src
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+
+volumes:
+  postgres_data: {}
+  redis_data: {}

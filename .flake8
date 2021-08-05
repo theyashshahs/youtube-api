@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 100
+exclude = .git, __pycache__
+per-file-ignores =
+    # imported but unused
+    __init__.py: F401
+    tests.py: F401
+    *test_modules*: F401
+    *test_modules*: E722
