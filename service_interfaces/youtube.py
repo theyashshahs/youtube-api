@@ -16,6 +16,7 @@ def get_youtube_searches(date, search_param: str):
         "type": "video",
         "order": "date",
         "publishedAfter": date,
+        "maxResults": "50",
     }
 
     session = requests.Session()
