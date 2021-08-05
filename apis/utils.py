@@ -1,3 +1,6 @@
+import re
+
+
 def paginationTypeByField(PaginationClass, field, page_item_count=5, page_size_param=None):
     class CustomPaginationClass(PaginationClass):
         ordering = field
@@ -16,3 +19,18 @@ def paginationTypeByField(PaginationClass, field, page_item_count=5, page_size_p
             return _page_size
 
     return CustomPaginationClass
+
+
+def _make_query_partial_searchable(s):
+    """
+    Converts the user's search string into something suitable for passing to
+    to_tsquery.
+    """
+    query = re.sub(r"[!\'()|&]", " ", s).strip()
+    if query:
+        query = re.sub(r"\s+", " & ", query)
+        # Support prefix search on the last word. A tsquery of 'toda:*' will
+        # match against any words that start with 'toda', which is good for
+        # search-as-you-type.
+        query += ":*"
+    return query
