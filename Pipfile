@@ -17,6 +17,7 @@ python-decouple = "*"
 dj-database-url = "*"
 redis = "*"
 django-redis = "*"
+requests = "*"
 
 [dev-packages]
 
