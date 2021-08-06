@@ -1,7 +1,7 @@
 from django.contrib import admin
 from youtube.models import Youtube
 
-
+# Admin/Dashboard for viewing Youtube model objects
 class YoutubeAdmin(admin.ModelAdmin):
     list_display = (
         "id",

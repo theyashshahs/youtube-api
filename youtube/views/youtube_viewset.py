@@ -12,6 +12,8 @@ from youtube.serializers import YoutubeSerializer
 
 
 class YoutubeViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    # Pagination class for listing objects based on published_at
+    # the minus sign "-" indicates that the published_at field is descending
     pagination_class = paginationTypeByField(pagination.CursorPagination, "-published_at")
     serializer_class = YoutubeSerializer
 
@@ -30,7 +32,7 @@ class YoutubeViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
                 "description", weight="B"
             )
 
-            # Filter the queryset with the search vector
+            # Filter the queryset with the search vector and search rank
             queryset = (
                 queryset.annotate(
                     rank=SearchRank(search_vector, partial_search_query),

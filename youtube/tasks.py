@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 PAGE_TOKEN = []
 
-
+# Async task to get youtube searches and strore them in the database
 @periodic_task(
     # runs every 20 seconds
     run_every=timedelta(seconds=20),
