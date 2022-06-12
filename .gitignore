@@ -110,3 +110,7 @@ celerybeat-schedule.bak
 celerybeat-schedule.dir
 celerybeat-schedule.dat
 /data/
+
+# Txt files
+next_page_token.txt
+next_api_key.txt
